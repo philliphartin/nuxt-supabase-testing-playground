@@ -1,5 +1,7 @@
 import { describe, test, expect } from "vitest"
-import { setup, fetch } from "@nuxt/test-utils"
+import { setup, fetch, useTestContext, TestContext } from "@nuxt/test-utils"
+import { createClient } from "@supabase/supabase-js"
+import { faker } from "@faker-js/faker"
 
 describe("auth examples", async () => {
   await setup({
@@ -29,6 +31,26 @@ describe("auth examples", async () => {
   })
 
   test("authenticated users can view their own profie", async () => {
-    describe.todo("Unimplemented")
+    // Note: In a perfect world, I would have a test util to create a test user, which returns their data that I can use to authenticate with and also make assertions with.
+    // Right now I'm attempting to manually creating a user in the database, and then using the returned access token to authenticate with the API.
+
+    const supabase = createClient(
+      process.env.SUPABASE_URL as string,
+      process.env.SUPABASE_SERVICE_KEY as string
+    )
+
+    const authResponse = await supabase.auth.signUp({
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+    })
+
+    const response = await fetch("/api/me", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${authResponse.data.session?.access_token}`,
+      },
+    })
+
+    expect(response.status).toEqual(200)
   })
 })
