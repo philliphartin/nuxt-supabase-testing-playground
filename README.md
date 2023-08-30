@@ -82,5 +82,5 @@ You can run the tests with the following commands:
 npm run test
 
 # Vitest UI
-npx vitest-ui
+npx vitest --ui
 ```
