@@ -5,9 +5,11 @@ import { serverSupabaseClient } from "#supabase/server"
 export default defineEventHandler(async (event) => {
   const supabase: SupabaseClient = await serverSupabaseClient(event)
 
+  const { content } = await readBody(event)
+
   const { data, error } = await supabase
     .from("posts")
-    .insert({ content: "Hello world!" })
+    .insert({ content })
     .select()
 
   if (error) {
