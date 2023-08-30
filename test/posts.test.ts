@@ -1,18 +1,16 @@
 import { describe, test, expect, beforeEach, TestContext } from "vitest"
-import { setup, fetch } from "@nuxt/test-utils"
+import { fetch, setup } from "@nuxt/test-utils"
 import { createClient } from "@supabase/supabase-js"
 import { faker } from "@faker-js/faker"
 
 describe("auth examples", async () => {
+  await setup({
+    server: true,
+  })
   const supabase = createClient(
     process.env.SUPABASE_URL as string,
     process.env.SUPABASE_SERVICE_KEY as string
   )
-
-  await setup({
-    server: true,
-    dev: true,
-  })
 
   beforeEach(async (context: TestContext) => {
     // Delete all posts before each test
