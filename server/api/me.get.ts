@@ -1,11 +1,7 @@
-import { serverSupabaseUser, serverSupabaseClient } from "#supabase/server"
 import { User } from "@supabase/supabase-js"
 
 export default defineEventHandler(async (event) => {
-  let user: User | null = null
-  try {
-    user = await serverSupabaseUser(event)
-  } catch (e) {}
+  const { user }: { user: User | null } = event.context.auth
 
   if (!user) {
     throw createError({
