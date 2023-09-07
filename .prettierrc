@@ -8,9 +8,5 @@
   "bracketSameLine": true,
   "vueIndentScriptAndStyle": true,
   "tabWidth": 2,
-  "plugins": [
-    "prettier-plugin-tailwindcss",
-    "prettier-plugin-organize-imports",
-    "prettier-plugin-organize-attributes"
-  ]
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-organize-imports", "prettier-plugin-organize-attributes"]
 }

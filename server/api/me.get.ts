@@ -1,17 +1,17 @@
-import { User } from "@supabase/supabase-js"
+import { User } from '@supabase/supabase-js'
 
 export default defineEventHandler(async (event) => {
-  const { user }: { user: User | null } = event.context.auth
+  const { user }: { user: User | undefined } = event.context?.auth
 
   if (!user) {
     throw createError({
-      statusMessage: "Unauthorised. Please log in.",
+      statusMessage: 'Unauthorised. Please log in.',
       statusCode: 401,
-      data: { error: "Unauthorised. Please log in." },
+      data: { error: 'Unauthorised. Please log in.' }
     })
   }
 
   return {
-    id: user.id,
+    id: user.id
   }
 })
