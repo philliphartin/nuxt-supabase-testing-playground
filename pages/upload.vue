@@ -1,2 +1,3 @@
-<template>Let's upload some schtuff!</template>
-<script setup></script>
+<template>
+  <div>Let's upload some schtuff!</div>
+</template>
