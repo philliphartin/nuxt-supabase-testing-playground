@@ -1,0 +1,16 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "useTabs": false,
+  "trailingComma": "none",
+  "htmlWhitespaceSensitivity": "ignore",
+  "printWidth": 160,
+  "bracketSameLine": true,
+  "vueIndentScriptAndStyle": true,
+  "tabWidth": 2,
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-organize-attributes"
+  ]
+}

@@ -12,14 +12,20 @@
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
     "@nuxt/devtools": "latest",
-    "@nuxt/test-utils": "^3.7.0",
+    "@nuxt/test-utils": "^3.7.1",
+    "@nuxtjs/tailwindcss": "^6.8.0",
     "@vitest/ui": "^0.34.3",
     "happy-dom": "^10.11.2",
-    "nuxt": "^3.7.0",
+    "nuxt": "^3.7.1",
     "nuxt-vitest": "^0.10.3",
+    "prettier": "^3.0.3",
+    "prettier-plugin-organize-attributes": "^1.0.0",
+    "prettier-plugin-organize-imports": "^3.2.3",
+    "prettier-plugin-tailwindcss": "^0.5.4",
+    "typescript": "^5.2.2",
     "vitest": "^0.33.0"
   },
   "dependencies": {
-    "@nuxtjs/supabase": "^1.0.2"
+    "@nuxtjs/supabase": "^1.1.0"
   }
 }
