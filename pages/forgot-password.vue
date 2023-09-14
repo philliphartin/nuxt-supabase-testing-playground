@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-8">Sign in to your account</h1>
+    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-8">Forgot Password</h1>
     <form class="space-y-4 md:space-y-6" v-if="!resetPasswordEmailSent" @submit.prevent="submit">
       <div>
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="email">Your email</label>
@@ -47,7 +47,7 @@
   const submit = async () => {
     isSubmitting.value = true
     const { error } = await client.auth.resetPasswordForEmail(email.value, {
-      redirectTo: `${window.location.origin}/login`
+      redirectTo: `${window.location.origin}/account/update-password`
     })
 
     if (error) {
