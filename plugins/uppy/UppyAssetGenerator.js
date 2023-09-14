@@ -28,7 +28,7 @@ export default class UppyAssetGenerator extends UIPlugin {
     }
 
     // Create a new asset record and return the ID
-    const { data, error } = await $fetch('/api/asset', {
+    const { data, error } = await $fetch('/api/assets', {
       method: 'POST',
       body: JSON.stringify({
         user_id: meta.user_id

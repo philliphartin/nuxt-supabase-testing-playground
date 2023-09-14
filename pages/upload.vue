@@ -13,16 +13,52 @@
     <!-- Gallery -->
     <section class="p-8 bg-gray-100 border border-gray-200 mt-12 rounded-xl">
       <h2 class="font-medium text-xl mb-4">Gallery</h2>
-      <div>
-        <img src="" alt="" />
+      <div v-for="file in files">
+        <img :src="file.path" :alt="file.name" />
       </div>
     </section>
   </div>
 </template>
 <script setup lang="ts">
-  const user = useSupabaseUser()
+  import { RealtimeChannel, User } from '@supabase/supabase-js'
+  const user = useSupabaseUser() as Ref<User>
+  const client = useSupabaseClient()
   const context = {
     chapter_id: 'chap-1',
     story_id: 'story-2'
   }
+
+  let subscriptions: RealtimeChannel[] = []
+
+  const { data: files, refresh: refreshFiles } = await useAsyncData(async () => {
+    const { data, error } = await client.from('asset_files').select('id, name, path').eq('user_id', user.value.id)
+
+    if (error) {
+      console.error(error)
+      return []
+    }
+
+    return data
+  })
+
+  function subscribeToFiles() {
+    subscriptions.push(
+      client
+        .channel('any')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'asset_files', filter: `user_id=eq.${user.value?.id}` }, (payload) => {
+          refreshFiles()
+        })
+        .subscribe()
+    )
+  }
+
+  onMounted(() => {
+    subscribeToFiles()
+  })
+
+  onUnmounted(() => {
+    subscriptions.forEach((subscription) => {
+      subscription.unsubscribe()
+    })
+  })
 </script>

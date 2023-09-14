@@ -66,15 +66,16 @@ export const useUploadStore = defineStore('uploads', () => {
 
     console.log('uppy:upload-success', file, response)
 
-    // Update the asset with the file information
-    await $fetch(`/api/asset`, {
-      method: 'PATCH',
+    // Record the original file upload
+    await $fetch(`/api/original-files`, {
+      method: 'POST',
       body: {
-        id: file.meta.asset_id,
+        asset_id: file.meta.asset_id,
         name: file.name,
         size: file.size,
         mime: file.type,
-        ext: file.extension
+        extension: file.extension,
+        path: response.uploadURL
       }
     })
   })
