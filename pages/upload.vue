@@ -13,8 +13,11 @@
     <!-- Gallery -->
     <section class="p-8 bg-gray-100 border border-gray-200 mt-12 rounded-xl">
       <h2 class="font-medium text-xl mb-4">Gallery</h2>
-      <div v-for="file in files">
-        <img :src="file.path" :alt="file.name" />
+      <div class="flex flex-wrap">
+        <div class="flex flex-col border bg-gray-200" v-for="file in files">
+          <img class="w-24 h-24" :src="'/api/file/' + file.asset_id" :alt="file.path" />
+          <span>{{ file.name }}</span>
+        </div>
       </div>
     </section>
   </div>
@@ -31,7 +34,7 @@
   let subscriptions: RealtimeChannel[] = []
 
   const { data: files, refresh: refreshFiles } = await useAsyncData(async () => {
-    const { data, error } = await client.from('asset_files').select('id, name, path').eq('user_id', user.value.id)
+    const { data, error } = await client.from('asset_files').select('asset_id, name, path').eq('user_id', user.value.id)
 
     if (error) {
       console.error(error)
@@ -53,7 +56,7 @@
   }
 
   onMounted(() => {
-    subscribeToFiles()
+    // subscribeToFiles()
   })
 
   onUnmounted(() => {
