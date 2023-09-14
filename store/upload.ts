@@ -2,7 +2,6 @@ import UppyAssetGenerator from '@/plugins/uppy/UppyAssetGenerator'
 import AwsS3 from '@uppy/aws-s3'
 import Uppy, { UppyFile } from '@uppy/core'
 
-import axios from 'axios'
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 import type { Ref } from 'vue'
@@ -65,23 +64,19 @@ export const useUploadStore = defineStore('uploads', () => {
       return
     }
 
-    // FIXME: Update the asset with the new details
-    // Update the asset
-    await axios.put('assets.update', file.meta.asset_id as string),
-      {
+    console.log('uppy:upload-success', file, response)
+
+    // Update the asset with the file information
+    await $fetch(`/api/asset`, {
+      method: 'PATCH',
+      body: {
+        id: file.meta.asset_id,
         name: file.name,
         size: file.size,
         mime: file.type,
         ext: file.extension
       }
-
-    // TODO:
-    if (file.meta.story_id) {
-      await axios.post('stories.assets.store', file.meta.story_id as string),
-        {
-          id: file.meta.asset_id
-        }
-    }
+    })
   })
 
   uppy.on('upload-error', (file, error, response) => {

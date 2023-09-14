@@ -4,15 +4,19 @@ import { SupabaseClient } from '@supabase/supabase-js'
 export default defineEventHandler(async (event) => {
   const supabase: SupabaseClient = await serverSupabaseClient(event)
 
-  const { user_id } = await readBody(event)
+  const { id, name, size, mime, ext } = await readBody(event)
 
   const { data, error } = await supabase
     .from('assets')
-    .insert({
-      user_id: user_id,
+    .update({
+      name: name,
+      size: size,
+      mime: mime,
+      ext: ext,
       status: 'placeholder'
     })
-    .select('id')
+    .eq('id', id)
+    .select('*')
     .single()
 
   if (error) {
